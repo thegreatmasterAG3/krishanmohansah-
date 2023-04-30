@@ -1,12 +1,22 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from .models import CV
+from .models import CV,IMAGE,TEXT,LINK
 
 # Create your views here.
 
 def main(request):
-  return render(request, 'main.html')
+
+  images = IMAGE.objects.all()
+  texts = TEXT.objects.all()
+  links = LINK.objects.all()
+
+  context = {'images': images,
+             'texts': texts,
+             'links': links,
+
+             }
+  return render(request, 'main.html',context)
 
 
 
@@ -20,13 +30,11 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('success')
+            return redirect('main')
     else:
         form = ContactForm()
     return render(request, 'main.html', {'form': form})
 
-def success(request):
-    return render(request, 'main.html')
 
 
 
@@ -36,3 +44,5 @@ def download_cv(request):
     response = HttpResponse(cv.pdf_file.read(), content_type='application/vnd.ms-word')
     response['Content-Disposition'] = 'attachment; filename=Developer_krishan_CV.pdf'  # replace `your-cv.docx` with the actual filename of your CV
     return response
+
+
