@@ -12,6 +12,9 @@ class Contact(models.Model):
     message = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name
+
 
 class CV(models.Model):
     pdf_file = models.FileField(upload_to='cv/')
@@ -61,3 +64,7 @@ class LINK(models.Model):
     instagram = models.TextField()
     facebook = models.TextField()
     location = models.TextField()
+
+
+class TITLE(models.Model):
+    title = models.TextField()

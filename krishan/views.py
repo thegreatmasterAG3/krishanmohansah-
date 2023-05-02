@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from .models import CV,IMAGE,TEXT,LINK
+from .models import CV,IMAGE,TEXT,LINK,TITLE
 
 # Create your views here.
 
@@ -10,10 +10,13 @@ def main(request):
   images = IMAGE.objects.all()
   texts = TEXT.objects.all()
   links = LINK.objects.all()
+  title = TITLE.objects.all()
+
 
   context = {'images': images,
              'texts': texts,
              'links': links,
+             'title': title,
 
              }
   return render(request, 'main.html',context)
